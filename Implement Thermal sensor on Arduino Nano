@@ -1,0 +1,26 @@
+#include <Wire.h> // Include Wire library for I2C communication
+#include <Adafruit_MLX90614.h> // Include Adafruit MLX90614 library
+
+Adafruit_MLX90614 mlx = Adafruit_MLX90614(); // Create an instance of the MLX90614 sensor
+
+void setup() {
+  Serial.begin(9600); // Start serial communication
+  mlx.begin(); // Initialize the sensor
+}
+
+void loop() {
+  float objTemp = mlx.readObjectTempC(); // Read object (surface) temperature in Celsius
+  float ambTemp = mlx.readAmbientTempC(); // Read ambient (environment) temperature in Celsius
+  
+  Serial.print("Object Temperature: ");
+  Serial.print(objTemp);
+  Serial.println(" °C");
+  
+  Serial.print("Ambient Temperature: ");
+  Serial.print(ambTemp);
+  Serial.println(" °C");
+
+  // Add your habitat restoration logic here based on temperature readings
+  
+  delay(1000); // Delay for 1 second
+}
