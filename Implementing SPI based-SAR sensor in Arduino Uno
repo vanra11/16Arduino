@@ -1,0 +1,37 @@
+#include <SPI.h>
+
+#define SAR_SENSOR_CS_PIN 10
+
+void setup() {
+  Serial.begin(9600);
+  SPI.begin();
+  pinMode(SAR_SENSOR_CS_PIN, OUTPUT);
+  digitalWrite(SAR_SENSOR_CS_PIN, HIGH); // Deselect the SAR sensor initially
+}
+
+void loop() {
+  // Select the SAR sensor
+  digitalWrite(SAR_SENSOR_CS_PIN, LOW);
+
+  // Send command to start data acquisition
+  // Replace this with actual commands specific to your SAR sensor
+  SPI.transfer(0x01); // Example command to start data acquisition
+
+  // Read data from SAR sensor
+  // Replace this with actual code to read data from your SAR sensor
+  // Assuming the sensor sends 16-bit data
+  int rawData = SPI.transfer16(0x00); // Example read data command
+
+  // Deselect the SAR sensor
+  digitalWrite(SAR_SENSOR_CS_PIN, HIGH);
+
+  // Process the raw data if needed
+  // For example, convert to distance, temperature, etc.
+
+  // Print the processed data
+  Serial.print("Processed Data: ");
+  Serial.println(rawData);
+
+  // Add delay or other logic as needed
+  delay(1000);
+}
