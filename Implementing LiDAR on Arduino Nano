@@ -1,0 +1,22 @@
+// Define the pin number for the LiDAR TX pin
+#define LIDAR_SERIAL_PIN 2
+
+// Define the baud rate for the LiDAR
+#define LIDAR_SERIAL_BAUD 115200
+
+void setup() {
+  Serial.begin(9600);  // Initialize serial communication for debugging
+  Serial1.begin(LIDAR_SERIAL_BAUD); // Initialize serial communication with LiDAR
+}
+
+void loop() {
+  if (Serial1.available() >= 9) {
+    if (Serial1.read() == 0x59 && Serial1.read() == 0x59) {
+      unsigned int distance = Serial1.read() + Serial1.read() * 256;
+      // The distance variable now contains the measured distance in centimeters
+      Serial.print("Distance: ");
+      Serial.print(distance);
+      Serial.println(" cm");
+    }
+  }
+}
