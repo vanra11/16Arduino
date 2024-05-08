@@ -1,0 +1,27 @@
+#include <SoftwareSerial.h>
+
+// Define the pin numbers for the LiDAR TX and RX pins
+#define LIDAR_TX_PIN 2
+#define LIDAR_RX_PIN 3
+
+// Define the baud rate for the LiDAR
+#define LIDAR_SERIAL_BAUD 115200
+
+SoftwareSerial lidarSerial(LIDAR_RX_PIN, LIDAR_TX_PIN); // RX, TX
+
+void setup() {
+  Serial.begin(9600);  // Initialize serial communication for debugging
+  lidarSerial.begin(LIDAR_SERIAL_BAUD); // Initialize software serial communication with LiDAR
+}
+
+void loop() {
+  if (lidarSerial.available() >= 9) {
+    if (lidarSerial.read() == 0x59 && lidarSerial.read() == 0x59) {
+      unsigned int distance = lidarSerial.read() + lidarSerial.read() * 256;
+      // The distance variable now contains the measured distance in centimeters
+      Serial.print("Distance: ");
+      Serial.print(distance);
+      Serial.println(" cm");
+    }
+  }
+}
